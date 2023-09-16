@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import Logo from "./Logo";
 import Form from "./Form";
 import PackingList from "./PackingList";
@@ -13,8 +13,13 @@ import Stats from "./Stats";
 function App() {
   // ! This is lifting up of state because the below peice of state is originally created in Form component but need to use in PackingList component we can pass it using props but can't pass it because Form and PackingList are siblings not parent-child. So to overcome this problem we are lifting up of state to the nearest common parent.
 
-  const [items, setItems] = useState([]);
-
+  // ? Below code is to use local storage data while intial rendering.
+  // const [items, setItems] = useState([]);
+  const [items, setItems] = useState(function(){
+    const storedItems = localStorage.getItem('items');
+    return JSON.parse(storedItems);
+  });
+  
   function handleDeletedItem(id) {
     console.log("handleDeletedItem");
     setItems(items.filter((item) => item.id !== id));
@@ -44,7 +49,9 @@ function App() {
       confirmation && setItems([]);
     }
   }
-  
+  useEffect(function(){
+    localStorage.setItem('items',JSON.stringify(items));
+  },[items]);
   return (
     <div className="app">
       <Logo />
