@@ -49,9 +49,12 @@ function App() {
       confirmation && setItems([]);
     }
   }
+
+  // ? Below use effect is used for storing items data into local storage.
   useEffect(function(){
     localStorage.setItem('items',JSON.stringify(items));
   },[items]);
+  
   return (
     <div className="app">
       <Logo />
