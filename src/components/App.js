@@ -17,6 +17,7 @@ function App() {
   // const [items, setItems] = useState([]);
   const [items, setItems] = useState(function(){
     const storedItems = localStorage.getItem('items');
+    if(!storedItems) return [];
     return JSON.parse(storedItems);
   });
   
